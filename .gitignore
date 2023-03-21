@@ -18,6 +18,7 @@ build/
 *.iml
 *.ipr
 *.iws
+**/.idea/
 **/.idea/shelf
 **/.idea/workspace.xml
 **/.idea/tasks.xml
@@ -30,6 +31,8 @@ build/
 **/.idea/dictionaries
 **/.idea/runConfigurations.xml
 .idea/caches
+.idea
+/.idea
 
 # layout inspector view captures
 captures

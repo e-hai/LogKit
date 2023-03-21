@@ -1,16 +1,13 @@
-package com.orhanobut.logger;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+package com.orhanobut.logger
 
 /**
  * Provides a common interface to emits logs through. This is a required contract for Logger.
  *
  * @see AndroidLogAdapter
+ *
  * @see DiskLogAdapter
  */
-public interface LogAdapter {
-
+interface LogAdapter {
   /**
    * Used to determine whether log should be printed out or not.
    *
@@ -18,9 +15,9 @@ public interface LogAdapter {
    * @param tag is the given tag for the log message
    *
    * @return is used to determine if log should printed.
-   *         If it is true, it will be printed, otherwise it'll be ignored.
+   * If it is true, it will be printed, otherwise it'll be ignored.
    */
-  boolean isLoggable(int priority, @Nullable String tag);
+  fun isLoggable(priority: Int, tag: String?): Boolean
 
   /**
    * Each log will use this pipeline
@@ -29,5 +26,5 @@ public interface LogAdapter {
    * @param tag is the given tag for the log message.
    * @param message is the given message for the log message.
    */
-  void log(int priority, @Nullable String tag, @NonNull String message);
+  fun log(priority: Int, tag: String?, message: String)
 }

@@ -3,13 +3,11 @@ package com.orhanobut.sample;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
-
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.DiskLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
 import com.orhanobut.logger.PrettyFormatStrategy;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -47,7 +45,7 @@ public class MainActivity extends Activity {
       }
     });
 
-    Logger.addLogAdapter(new DiskLogAdapter());
+    Logger.addLogAdapter(new DiskLogAdapter(getFilesDir().getAbsolutePath()));
 
 
     Logger.w("no thread info and only 1 method");

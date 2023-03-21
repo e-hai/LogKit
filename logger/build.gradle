@@ -1,12 +1,14 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
+plugins {
+  id 'com.android.library'
+  id 'org.jetbrains.kotlin.android'
+  id 'kotlin-kapt'
+}
 
 android {
-  compileSdkVersion rootProject.ext.compileSdkVersion
-  buildToolsVersion rootProject.ext.buildToolsVersion
+  compileSdkVersion 30
 
   defaultConfig {
-    minSdkVersion rootProject.ext.minSdkVersion
+    minSdkVersion 21
   }
 
   lintOptions {
@@ -17,17 +19,24 @@ android {
   testOptions {
     unitTests.returnDefaultValues = true
   }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
+  kotlinOptions {
+    jvmTarget = '1.8'
+  }
 }
 
 dependencies {
-  implementation deps.supportAnnotations
 
-  testImplementation deps.junit
-  testImplementation deps.truth
-  testImplementation deps.robolectric
-  testImplementation deps.mockito
-  testImplementation deps.json
-  testImplementation deps.kotlin
+  implementation "androidx.annotation:annotation:1.5.0"
+
+  testImplementation 'junit:junit:4.12'
+  testImplementation 'com.google.truth:truth:0.28'
+  testImplementation 'org.robolectric:robolectric:3.3'
+  testImplementation "org.mockito:mockito-core:2.8.9"
+  testImplementation "org.json:json:20230227"
 }
 
-apply from: rootProject.file('gradle/maven_push.gradle')
