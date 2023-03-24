@@ -3,11 +3,9 @@ package com.orhanobut.logger
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
-import java.io.File
-import java.io.FileReader
-import java.io.FileWriter
-import java.io.IOException
-import java.nio.CharBuffer
+import org.json.JSONObject
+import java.io.*
+
 
 /**
  * Abstract class that takes care of background threading the file log operation on Android.
@@ -25,7 +23,8 @@ class DiskLogStrategy(handler: Handler) : LogStrategy {
     handler.sendMessage(handler.obtainMessage(level, message))
   }
 
-  internal class WriteHandler(looper: Looper, folder: String, maxFileSize: Int) : Handler(Utils.checkNotNull(looper)) {
+  internal class WriteHandler(looper: Looper, folder: String, maxFileSize: Int) :
+    Handler(Utils.checkNotNull(looper)) {
     private val folder: String
     private val maxFileSize: Int
 
@@ -101,26 +100,19 @@ class DiskLogStrategy(handler: Handler) : LogStrategy {
     var logCacheFile: File? = null
 
     fun readLog(): List<String> {
-      var reader: FileReader? = null
+      logCacheFile ?: return emptyList()
+
       val logList = ArrayList<String>()
-      if (null != logCacheFile) {
-        try {
-          reader = FileReader(logCacheFile)
-          val buffer = CharBuffer.allocate(1000)
-          while (reader.read(buffer) != -1) {
-            buffer.flip()
-            val line = buffer.toString()
-            logList.add(line)
-          }
-        } catch (e: Exception) {
-          e.printStackTrace()
-        } finally {
-          try {
-            reader?.close()
-          } catch (e: IOException) {
-            e.printStackTrace()
-          }
+      try {
+        val fileReader = FileReader(logCacheFile)
+        val bufferedReader = BufferedReader(fileReader)
+        var line = ""
+        while (bufferedReader.readLine().also { line = it } != null) {
+          logList.add(line)
         }
+        bufferedReader.close()
+      } catch (e: Exception) {
+        e.printStackTrace()
       }
       return logList
     }

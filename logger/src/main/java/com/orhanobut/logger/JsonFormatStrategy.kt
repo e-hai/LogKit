@@ -12,6 +12,12 @@ import java.util.*
  * Writes to CSV the following data:
  * epoch timestamp, ISO8601 timestamp (human-readable), log level, tag, log message.
  */
+
+const val JSON_NAME_DATE = "date"
+const val JSON_NAME_LEVEL = "level"
+const val JSON_NAME_TAG = "tag"
+const val JSON_NAME_MSG = "msg"
+
 class JsonFormatStrategy private constructor(builder: Builder) : FormatStrategy {
   private val date: Date
   private val dateFormat: SimpleDateFormat
@@ -34,8 +40,8 @@ class JsonFormatStrategy private constructor(builder: Builder) : FormatStrategy 
     rootJson.put(JSON_NAME_LEVEL, Utils.logLevel(priority))
     rootJson.put(JSON_NAME_DATE, dateFormat.format(date))
     rootJson.put(JSON_NAME_MSG, message)
-
-    logStrategy.log(priority, tag, rootJson.toString())
+    val msg = rootJson.toString() + NEW_LINE
+    logStrategy.log(priority, tag, msg)
   }
 
   private fun formatTag(tag: String?): String? {
@@ -93,10 +99,6 @@ class JsonFormatStrategy private constructor(builder: Builder) : FormatStrategy 
   }
 
   companion object {
-    const val JSON_NAME_DATE = "date"
-    const val JSON_NAME_LEVEL = "level"
-    const val JSON_NAME_TAG = "tag"
-    const val JSON_NAME_MSG = "msg"
 
     private val NEW_LINE = System.getProperty("line.separator")
     private const val NEW_LINE_REPLACEMENT = " <br> "

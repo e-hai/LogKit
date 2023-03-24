@@ -1,1 +1,12 @@
-<manifest package="com.orhanobut.logger"/>
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.orhanobut.logger">
+
+  <application>
+    <activity
+        android:theme="@style/Theme.Material3.DayNight.NoActionBar"
+        android:name=".ui.LogActivity"
+        android:exported="true" />
+  </application>
+
+</manifest>
