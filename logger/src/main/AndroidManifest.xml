@@ -4,7 +4,7 @@
 
   <application>
     <activity
-        android:theme="@style/Theme.Material3.DayNight.NoActionBar"
+        android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         android:name=".ui.LogActivity"
         android:exported="true" />
   </application>
