@@ -1,4 +1,4 @@
-package com.orhanobut.logger
+package com.orhanobut.logger.log.strategy
 
 /**
  * Determines destination target for the logs such as Disk, Logcat etc.

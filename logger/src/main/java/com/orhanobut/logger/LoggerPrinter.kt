@@ -6,6 +6,7 @@ import com.orhanobut.logger.Logger.ERROR
 import com.orhanobut.logger.Logger.INFO
 import com.orhanobut.logger.Logger.VERBOSE
 import com.orhanobut.logger.Logger.WARN
+import com.orhanobut.logger.adapter.LogAdapter
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -25,10 +26,8 @@ internal class LoggerPrinter : Printer {
    */
   private val localTag = ThreadLocal<String>()
   private val logAdapters: MutableList<LogAdapter> = ArrayList()
-  override fun t(tag: String?): Printer {
-    if (tag != null) {
-      localTag.set(tag)
-    }
+  override fun t(tag: String): Printer {
+    localTag.set(tag)
     return this
   }
 
@@ -36,8 +35,8 @@ internal class LoggerPrinter : Printer {
     log(DEBUG, null, message, *args)
   }
 
-  override fun d(`object`: Any?) {
-    log(DEBUG, null, Utils.toString(`object`))
+  override fun d(obj: Any?) {
+    log(DEBUG, null, Utils.toString(obj))
   }
 
   override fun e(message: String, vararg args: Any?) {
@@ -108,11 +107,13 @@ internal class LoggerPrinter : Printer {
     }
   }
 
-  @Synchronized override fun log(priority: Int,
-                                 tag: String?,
-                                 message: String?,
-                                 throwable: Throwable?) {
-    var message = message
+  @Synchronized override fun log(
+    priority: Int,
+    tag: String?,
+    msg: String?,
+    throwable: Throwable?
+  ) {
+    var message = msg
     if (throwable != null && message != null) {
       message += " : " + Utils.getStackTraceString(throwable)
     }
@@ -140,10 +141,12 @@ internal class LoggerPrinter : Printer {
   /**
    * This method is synchronized in order to avoid messy of logs' order.
    */
-  @Synchronized private fun log(priority: Int,
-                                throwable: Throwable?,
-                                msg: String,
-                                vararg args: Any?) {
+  @Synchronized private fun log(
+    priority: Int,
+    throwable: Throwable?,
+    msg: String,
+    vararg args: Any?
+  ) {
     Utils.checkNotNull(msg)
     val tag = tag
     val message = createMessage(msg, *args)

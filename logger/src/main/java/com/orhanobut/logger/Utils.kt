@@ -1,67 +1,60 @@
-package com.orhanobut.logger;
+package com.orhanobut.logger
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.net.UnknownHostException;
-import java.util.Arrays;
-
-import static com.orhanobut.logger.Logger.ASSERT;
-import static com.orhanobut.logger.Logger.DEBUG;
-import static com.orhanobut.logger.Logger.ERROR;
-import static com.orhanobut.logger.Logger.INFO;
-import static com.orhanobut.logger.Logger.VERBOSE;
-import static com.orhanobut.logger.Logger.WARN;
+import com.orhanobut.logger.Logger.ASSERT
+import com.orhanobut.logger.Logger.DEBUG
+import com.orhanobut.logger.Logger.ERROR
+import com.orhanobut.logger.Logger.INFO
+import com.orhanobut.logger.Logger.VERBOSE
+import com.orhanobut.logger.Logger.WARN
+import java.io.PrintWriter
+import java.io.StringWriter
+import java.net.UnknownHostException
+import java.util.*
 
 /**
  * Provides convenient methods to some common operations
  */
-final class Utils {
-
-  private Utils() {
-    // Hidden constructor.
-  }
-
+object Utils {
   /**
    * Returns true if the string is null or 0-length.
    *
    * @param str the string to be examined
    * @return true if str is null or zero length
    */
-  static boolean isEmpty(CharSequence str) {
-    return str == null || str.length() == 0;
+  fun isEmpty(str: CharSequence?): Boolean {
+    return str == null || str.isEmpty()
   }
 
   /**
    * Returns true if a and b are equal, including if they are both null.
-   * <p><i>Note: In platform versions 1.1 and earlier, this method only worked well if
-   * both the arguments were instances of String.</i></p>
+   *
+   * *Note: In platform versions 1.1 and earlier, this method only worked well if
+   * both the arguments were instances of String.*
    *
    * @param a first CharSequence to check
    * @param b second CharSequence to check
    * @return true if a and b are equal
-   * <p>
+   *
+   *
    * NOTE: Logic slightly change due to strict policy on CI -
    * "Inner assignments should be avoided"
    */
-  static boolean equals(CharSequence a, CharSequence b) {
-    if (a == b) return true;
+  fun equals(a: CharSequence?, b: CharSequence?): Boolean {
+    if (a === b) return true
     if (a != null && b != null) {
-      int length = a.length();
-      if (length == b.length()) {
-        if (a instanceof String && b instanceof String) {
-          return a.equals(b);
+      val length = a.length
+      if (length == b.length) {
+        return if (a is String && b is String) {
+          a == b
         } else {
-          for (int i = 0; i < length; i++) {
-            if (a.charAt(i) != b.charAt(i)) return false;
+          for (i in 0 until length) {
+            if (a[i] != b[i]) return false
           }
-          return true;
+          true
         }
       }
     }
-    return false;
+    return false
   }
 
   /**
@@ -70,88 +63,79 @@ final class Utils {
    *
    * @return Stack trace in form of String
    */
-  static String getStackTraceString(Throwable tr) {
+  fun getStackTraceString(tr: Throwable?): String {
     if (tr == null) {
-      return "";
+      return ""
     }
 
     // This is to reduce the amount of log spew that apps do in the non-error
     // condition of the network being unavailable.
-    Throwable t = tr;
+    var t = tr
     while (t != null) {
-      if (t instanceof UnknownHostException) {
-        return "";
+      if (t is UnknownHostException) {
+        return ""
       }
-      t = t.getCause();
+      t = t.cause
     }
-
-    StringWriter sw = new StringWriter();
-    PrintWriter pw = new PrintWriter(sw);
-    tr.printStackTrace(pw);
-    pw.flush();
-    return sw.toString();
+    val sw = StringWriter()
+    val pw = PrintWriter(sw)
+    tr.printStackTrace(pw)
+    pw.flush()
+    return sw.toString()
   }
 
-  static String logLevel(int value) {
-    switch (value) {
-      case VERBOSE:
-        return "VERBOSE";
-      case DEBUG:
-        return "DEBUG";
-      case INFO:
-        return "INFO";
-      case WARN:
-        return "WARN";
-      case ERROR:
-        return "ERROR";
-      case ASSERT:
-        return "ASSERT";
-      default:
-        return "UNKNOWN";
+  fun logLevel(value: Int): String {
+    return when (value) {
+      VERBOSE -> "VERBOSE"
+      DEBUG -> "DEBUG"
+      INFO -> "INFO"
+      WARN -> "WARN"
+      ERROR -> "ERROR"
+      ASSERT -> "ASSERT"
+      else -> "UNKNOWN"
     }
   }
 
-  public static String toString(Object object) {
-    if (object == null) {
-      return "null";
-    }
-    if (!object.getClass().isArray()) {
-      return object.toString();
-    }
-    if (object instanceof boolean[]) {
-      return Arrays.toString((boolean[]) object);
-    }
-    if (object instanceof byte[]) {
-      return Arrays.toString((byte[]) object);
-    }
-    if (object instanceof char[]) {
-      return Arrays.toString((char[]) object);
-    }
-    if (object instanceof short[]) {
-      return Arrays.toString((short[]) object);
-    }
-    if (object instanceof int[]) {
-      return Arrays.toString((int[]) object);
-    }
-    if (object instanceof long[]) {
-      return Arrays.toString((long[]) object);
-    }
-    if (object instanceof float[]) {
-      return Arrays.toString((float[]) object);
-    }
-    if (object instanceof double[]) {
-      return Arrays.toString((double[]) object);
-    }
-    if (object instanceof Object[]) {
-      return Arrays.deepToString((Object[]) object);
-    }
-    return "Couldn't find a correct type for the object";
-  }
-
-  @NonNull static <T> T checkNotNull(@Nullable final T obj) {
+  fun toString(obj: Any?): String {
     if (obj == null) {
-      throw new NullPointerException();
+      return "null"
     }
-    return obj;
+    if (!obj.javaClass.isArray) {
+      return obj.toString()
+    }
+    if (obj is BooleanArray) {
+      return Arrays.toString(obj as BooleanArray?)
+    }
+    if (obj is ByteArray) {
+      return Arrays.toString(obj as ByteArray?)
+    }
+    if (obj is CharArray) {
+      return Arrays.toString(obj as CharArray?)
+    }
+    if (obj is ShortArray) {
+      return Arrays.toString(obj as ShortArray?)
+    }
+    if (obj is IntArray) {
+      return Arrays.toString(obj as IntArray?)
+    }
+    if (obj is LongArray) {
+      return Arrays.toString(obj as LongArray?)
+    }
+    if (obj is FloatArray) {
+      return Arrays.toString(obj as FloatArray?)
+    }
+    if (obj is DoubleArray) {
+      return Arrays.toString(obj as DoubleArray?)
+    }
+    return if (obj is Array<*>) {
+      Arrays.deepToString(obj)
+    } else "Couldn't find a correct type for the object"
+  }
+
+  fun <T> checkNotNull(obj: T?): T {
+    if (obj == null) {
+      throw NullPointerException()
+    }
+    return obj
   }
 }

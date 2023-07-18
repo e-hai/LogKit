@@ -1,5 +1,11 @@
-package com.orhanobut.logger
+package com.orhanobut.logger.format.strategy
 
+import com.orhanobut.logger.Logger
+import com.orhanobut.logger.Logger.DEFAULT_TAG
+import com.orhanobut.logger.LoggerPrinter
+import com.orhanobut.logger.Utils
+import com.orhanobut.logger.log.strategy.LogStrategy
+import com.orhanobut.logger.log.strategy.LogcatLogStrategy
 import java.lang.StringBuilder
 
 /**
@@ -60,7 +66,7 @@ class PrettyFormatStrategy private constructor(builder: Builder) : FormatStrateg
     }
     var i = 0
     while (i < length) {
-      val count = Math.min(length - i, CHUNK_SIZE)
+      val count = (length - i).coerceAtMost(CHUNK_SIZE)
       //create a new String with system's default charset (which is UTF-8 for Android)
       logContent(priority, tag, String(bytes, i, count))
       i += CHUNK_SIZE
@@ -93,17 +99,17 @@ class PrettyFormatStrategy private constructor(builder: Builder) : FormatStrateg
       }
       val builder = StringBuilder()
       builder.append(HORIZONTAL_LINE)
-          .append(' ')
-          .append(level)
-          .append(getSimpleClassName(trace[stackIndex].className))
-          .append(".")
-          .append(trace[stackIndex].methodName)
-          .append(" ")
-          .append(" (")
-          .append(trace[stackIndex].fileName)
-          .append(":")
-          .append(trace[stackIndex].lineNumber)
-          .append(")")
+        .append(' ')
+        .append(level)
+        .append(getSimpleClassName(trace[stackIndex].className))
+        .append(".")
+        .append(trace[stackIndex].methodName)
+        .append(" ")
+        .append(" (")
+        .append(trace[stackIndex].fileName)
+        .append(":")
+        .append(trace[stackIndex].lineNumber)
+        .append(")")
       level += "   "
       logChunk(logType, tag, builder.toString())
     }
@@ -158,16 +164,18 @@ class PrettyFormatStrategy private constructor(builder: Builder) : FormatStrateg
 
   private fun formatTag(tag: String?): String? {
     return if (!Utils.isEmpty(tag) && !Utils.equals(this.tag, tag)) {
-      this.tag + "-" + tag
-    } else this.tag
+      tag
+    } else {
+      this.tag
+    }
   }
 
   class Builder {
     var methodCount = 2
     var methodOffset = 0
     var showThreadInfo = true
-    var logStrategy: LogStrategy? = null
-    var tag: String = "PRETTY_LOGGER"
+    var logStrategy: LogStrategy = LogcatLogStrategy()
+    var tag: String = DEFAULT_TAG
     fun methodCount(count: Int): Builder {
       methodCount = count
       return this
@@ -194,9 +202,6 @@ class PrettyFormatStrategy private constructor(builder: Builder) : FormatStrateg
     }
 
     fun build(): PrettyFormatStrategy {
-      if (logStrategy == null) {
-        logStrategy = LogcatLogStrategy()
-      }
       return PrettyFormatStrategy(this)
     }
   }
@@ -224,9 +229,10 @@ class PrettyFormatStrategy private constructor(builder: Builder) : FormatStrateg
     private const val DOUBLE_DIVIDER = "────────────────────────────────────────────────────────"
     private const val SINGLE_DIVIDER = "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄"
     private const val TOP_BORDER = TOP_LEFT_CORNER.toString() + DOUBLE_DIVIDER + DOUBLE_DIVIDER
-    private const val BOTTOM_BORDER = BOTTOM_LEFT_CORNER.toString() + DOUBLE_DIVIDER + DOUBLE_DIVIDER
+    private const val BOTTOM_BORDER =
+      BOTTOM_LEFT_CORNER.toString() + DOUBLE_DIVIDER + DOUBLE_DIVIDER
     private const val MIDDLE_BORDER = MIDDLE_CORNER.toString() + SINGLE_DIVIDER + SINGLE_DIVIDER
-    @JvmStatic fun newBuilder(): Builder {
+    fun newBuilder(): Builder {
       return Builder()
     }
   }
@@ -237,7 +243,7 @@ class PrettyFormatStrategy private constructor(builder: Builder) : FormatStrateg
     methodCount = builder.methodCount
     methodOffset = builder.methodOffset
     showThreadInfo = builder.showThreadInfo
-    logStrategy = builder.logStrategy!!
+    logStrategy = builder.logStrategy
     tag = builder.tag
   }
 }

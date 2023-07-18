@@ -1,8 +1,12 @@
-package com.orhanobut.logger
+package com.orhanobut.logger.format.strategy
 
 import android.os.Handler
 import android.os.HandlerThread
-import org.json.JSONObject
+import com.orhanobut.logger.log.strategy.DiskLogStrategy.WriteHandler
+import com.orhanobut.logger.Logger.DEFAULT_TAG
+import com.orhanobut.logger.Utils
+import com.orhanobut.logger.log.strategy.DiskLogStrategy
+import com.orhanobut.logger.log.strategy.LogStrategy
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -12,13 +16,7 @@ import java.util.*
  * Writes to CSV the following data:
  * epoch timestamp, ISO8601 timestamp (human-readable), log level, tag, log message.
  */
-
-const val JSON_NAME_DATE = "date"
-const val JSON_NAME_LEVEL = "level"
-const val JSON_NAME_TAG = "tag"
-const val JSON_NAME_MSG = "msg"
-
-class JsonFormatStrategy private constructor(builder: Builder) : FormatStrategy {
+class CsvFormatStrategy private constructor(builder: Builder) : FormatStrategy {
   private val date: Date
   private val dateFormat: SimpleDateFormat
   private val logStrategy: LogStrategy
@@ -28,20 +26,34 @@ class JsonFormatStrategy private constructor(builder: Builder) : FormatStrategy 
     Utils.checkNotNull(message)
     val tag = formatTag(onceOnlyTag)
     date.time = System.currentTimeMillis()
+    val builder = StringBuilder()
+
+    // machine-readable date/time
+    builder.append(date.time.toString())
+
+    // human-readable date/time
+    builder.append(SEPARATOR)
+    builder.append(dateFormat.format(date))
+
+    // level
+    builder.append(SEPARATOR)
+    builder.append(Utils.logLevel(priority))
+
+    // tag
+    builder.append(SEPARATOR)
+    builder.append(tag)
 
     // message
     if (message.contains(NEW_LINE)) {
       // a new line would break the CSV format, so we replace it here
       message = message.replace(NEW_LINE.toRegex(), NEW_LINE_REPLACEMENT)
     }
+    builder.append(SEPARATOR)
+    builder.append(message)
 
-    val rootJson = JSONObject()
-    rootJson.put(JSON_NAME_TAG, tag)
-    rootJson.put(JSON_NAME_LEVEL, Utils.logLevel(priority))
-    rootJson.put(JSON_NAME_DATE, dateFormat.format(date))
-    rootJson.put(JSON_NAME_MSG, message)
-    val msg = rootJson.toString() + NEW_LINE
-    logStrategy.log(priority, tag, msg)
+    // new line
+    builder.append(NEW_LINE)
+    logStrategy.log(priority, tag, builder.toString())
   }
 
   private fun formatTag(tag: String?): String? {
@@ -54,7 +66,7 @@ class JsonFormatStrategy private constructor(builder: Builder) : FormatStrategy 
     var date: Date? = null
     var dateFormat: SimpleDateFormat? = null
     var logStrategy: LogStrategy? = null
-    var tag: String? = "PRETTY_LOGGER"
+    var tag: String? = DEFAULT_TAG
 
     fun date(data: Date?): Builder {
       this.date = data
@@ -76,7 +88,7 @@ class JsonFormatStrategy private constructor(builder: Builder) : FormatStrategy 
       return this
     }
 
-    fun build(diskPath: String): JsonFormatStrategy {
+    fun build(diskPath: String): CsvFormatStrategy {
       if (date == null) {
         date = Date()
       }
@@ -87,10 +99,10 @@ class JsonFormatStrategy private constructor(builder: Builder) : FormatStrategy 
         val folder = diskPath + File.separatorChar + "logger"
         val ht = HandlerThread("AndroidFileLogger.$folder")
         ht.start()
-        val handler: Handler = DiskLogStrategy.WriteHandler(ht.looper, folder, MAX_BYTES)
+        val handler: Handler = WriteHandler(ht.looper, folder, MAX_BYTES)
         logStrategy = DiskLogStrategy(handler)
       }
-      return JsonFormatStrategy(this)
+      return CsvFormatStrategy(this)
     }
 
     companion object {
@@ -99,7 +111,6 @@ class JsonFormatStrategy private constructor(builder: Builder) : FormatStrategy 
   }
 
   companion object {
-
     private val NEW_LINE = System.getProperty("line.separator")
     private const val NEW_LINE_REPLACEMENT = " <br> "
     private const val SEPARATOR = ","

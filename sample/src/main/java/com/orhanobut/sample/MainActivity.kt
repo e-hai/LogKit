@@ -3,18 +3,10 @@ package com.orhanobut.sample
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import com.orhanobut.logger.*
-import com.orhanobut.logger.Logger.addLogAdapter
-import com.orhanobut.logger.Logger.d
-import com.orhanobut.logger.Logger.clearLogAdapters
-import com.orhanobut.logger.PrettyFormatStrategy.Companion.newBuilder
-import com.orhanobut.logger.Logger.w
-import com.orhanobut.logger.Logger.i
-import com.orhanobut.logger.Logger.t
-import com.orhanobut.logger.Logger.json
+import com.orhanobut.logger.adapter.AndroidLogAdapter
+import com.orhanobut.logger.adapter.DiskLogAdapter
+import com.orhanobut.logger.Logger
 import com.orhanobut.logger.ui.LogActivity
-import java.util.*
 
 class MainActivity : Activity() {
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,16 +56,15 @@ class MainActivity : Activity() {
 //    addLogAdapter(AndroidLogAdapter(formatStrategy))
 //    w("my log message with my tag")
 
-    clearLogAdapters()
-    addLogAdapter(AndroidLogAdapter())
-    val csv = JsonFormatStrategy.newBuilder()
-      .build(filesDir?.absolutePath ?: "")
-    addLogAdapter(object : DiskLogAdapter(csv) {
-    })
-    d("my log message with JsonFormatStrategy")
-    for (i in 0..100) {
-      d("my log message $i")
-    }
+    Logger.clearLogAdapters()
+    Logger.addLogAdapter(AndroidLogAdapter())
+    Logger.t("NEW-TAG").v("my log message with JsonFormatStrategy")
+    Logger.v("输出所有信息 verbose my log message")
+    Logger.d("输出调试信息 debug my log message")
+    Logger.i("输出必要信息 info my log message")
+    Logger.w("输出警告信息 warn my log message")
+    Logger.e("输出错误信息 error my log message")
+
     startActivity(Intent(this, LogActivity::class.java))
   }
 }

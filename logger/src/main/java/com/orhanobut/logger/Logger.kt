@@ -1,7 +1,7 @@
 package com.orhanobut.logger
 
-import com.orhanobut.logger.LoggerPrinter
-import com.orhanobut.logger.LogAdapter
+import com.orhanobut.logger.adapter.LogAdapter
+
 
 /**
  * <pre>
@@ -65,6 +65,9 @@ import com.orhanobut.logger.LogAdapter
  * @see LogStrategy
  */
 object Logger {
+
+  const val DEFAULT_TAG = "Boom"
+
   const val VERBOSE = 2
   const val DEBUG = 3
   const val INFO = 4
@@ -72,15 +75,16 @@ object Logger {
   const val ERROR = 6
   const val ASSERT = 7
   private var printer: Printer = LoggerPrinter()
+
   fun printer(printer: Printer) {
     Logger.printer = Utils.checkNotNull(printer)
   }
 
-  @JvmStatic fun addLogAdapter(adapter: LogAdapter) {
+  fun addLogAdapter(adapter: LogAdapter) {
     printer.addAdapter(Utils.checkNotNull(adapter))
   }
 
-  @JvmStatic fun clearLogAdapters() {
+  fun clearLogAdapters() {
     printer.clearLogAdapters()
   }
 
@@ -89,7 +93,7 @@ object Logger {
    * set during initialization. After this invocation, the general tag that's been set will
    * be used for the subsequent log calls
    */
-  @JvmStatic fun t(tag: String?): Printer {
+  fun t(tag: String): Printer {
     return printer.t(tag)
   }
 
@@ -104,7 +108,7 @@ object Logger {
     printer.d(message, *args)
   }
 
-  @JvmStatic fun d(`object`: Any?) {
+  fun d(`object`: Any?) {
     printer.d(`object`)
   }
 
@@ -116,7 +120,7 @@ object Logger {
     printer.e(throwable, message, *args)
   }
 
-  @JvmStatic fun i(message: String, vararg args: Any?) {
+  fun i(message: String, vararg args: Any?) {
     printer.i(message, *args)
   }
 
@@ -124,7 +128,7 @@ object Logger {
     printer.v(message, *args)
   }
 
-  @JvmStatic fun w(message: String, vararg args: Any?) {
+  fun w(message: String, vararg args: Any?) {
     printer.w(message, *args)
   }
 
@@ -139,7 +143,7 @@ object Logger {
   /**
    * Formats the given json content and print it
    */
-  @JvmStatic fun json(json: String?) {
+  fun json(json: String?) {
     printer.json(json)
   }
 

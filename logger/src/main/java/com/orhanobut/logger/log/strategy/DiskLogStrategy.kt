@@ -1,9 +1,9 @@
-package com.orhanobut.logger
+package com.orhanobut.logger.log.strategy
 
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
-import org.json.JSONObject
+import com.orhanobut.logger.Utils
 import java.io.*
 
 
@@ -12,18 +12,17 @@ import java.io.*
  * implementing classes are free to directly perform I/O operations there.
  *
  * Writes all logs to the disk with CSV format.
+ *
+ * 把Log写到CSV格式的文件中
  */
-class DiskLogStrategy(handler: Handler) : LogStrategy {
+class DiskLogStrategy(private val handler: Handler) : LogStrategy {
 
-  private val handler: Handler
-  override fun log(level: Int, tag: String?, message: String) {
-    Utils.checkNotNull(message)
-
+  override fun log(priority: Int, tag: String?, message: String) {
     // do nothing on the calling thread, simply pass the tag/msg to the background thread
-    handler.sendMessage(handler.obtainMessage(level, message))
+    handler.sendMessage(handler.obtainMessage(priority, message))
   }
 
-  internal class WriteHandler(looper: Looper, folder: String, maxFileSize: Int) :
+  class WriteHandler(looper: Looper, folder: String, maxFileSize: Int) :
     Handler(Utils.checkNotNull(looper)) {
     private val folder: String
     private val maxFileSize: Int
@@ -37,7 +36,6 @@ class DiskLogStrategy(handler: Handler) : LogStrategy {
         writeLog(fileWriter, content)
         fileWriter.flush()
         fileWriter.close()
-        logCacheFile = logFile
       } catch (e: IOException) {
         if (fileWriter != null) {
           try {
@@ -89,32 +87,6 @@ class DiskLogStrategy(handler: Handler) : LogStrategy {
     init {
       this.folder = Utils.checkNotNull(folder)
       this.maxFileSize = maxFileSize
-    }
-  }
-
-  init {
-    this.handler = Utils.checkNotNull(handler)
-  }
-
-  companion object {
-    var logCacheFile: File? = null
-
-    fun readLog(): List<String> {
-      logCacheFile ?: return emptyList()
-
-      val logList = ArrayList<String>()
-      try {
-        val fileReader = FileReader(logCacheFile)
-        val bufferedReader = BufferedReader(fileReader)
-        var line = ""
-        while (bufferedReader.readLine().also { line = it } != null) {
-          logList.add(line)
-        }
-        bufferedReader.close()
-      } catch (e: Exception) {
-        e.printStackTrace()
-      }
-      return logList
     }
   }
 }

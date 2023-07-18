@@ -1,4 +1,4 @@
-package com.orhanobut.logger
+package com.orhanobut.logger.adapter
 
 /**
  * Provides a common interface to emits logs through. This is a required contract for Logger.
