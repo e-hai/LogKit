@@ -3,6 +3,7 @@ package com.orhanobut.sample
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import com.orhanobut.logger.adapter.AndroidLogAdapter
 import com.orhanobut.logger.adapter.DiskLogAdapter
 import com.orhanobut.logger.Logger
@@ -64,7 +65,9 @@ class MainActivity : Activity() {
     Logger.i("输出必要信息 info my log message")
     Logger.w("输出警告信息 warn my log message")
     Logger.e("输出错误信息 error my log message")
-
-    startActivity(Intent(this, LogActivity::class.java))
+    findViewById<View>(R.id.tv_view).postDelayed({
+      LogActivity.startActivity(this)
+    }, 2000)
   }
+
 }
