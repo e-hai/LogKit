@@ -15,3 +15,4 @@ dependencyResolutionManagement {
   }
 }
 include ':logger', ':sample'
+include ':log'
