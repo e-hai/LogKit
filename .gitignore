@@ -32,7 +32,10 @@ build/
 **/.idea/runConfigurations.xml
 .idea/caches
 .idea
+.idea/
 /.idea
+/.idea/
+
 
 # layout inspector view captures
 captures

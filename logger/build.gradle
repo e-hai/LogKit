@@ -1,21 +1,28 @@
 plugins {
-  id 'com.android.library'
-  id 'org.jetbrains.kotlin.android'
-  id 'kotlin-kapt'
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 android {
-  compileSdk 34
+    namespace 'com.orhanobut.logger'
+    compileSdk 34
 
-  defaultConfig {
-    minSdkVersion 21
-  }
-  namespace 'com.orhanobut.logger'
+    defaultConfig {
+        minSdk 21
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = "17"
+    }
 }
 
 dependencies {
-  implementation 'androidx.annotation:annotation-jvm:1.9.1'
+    implementation 'androidx.annotation:annotation-jvm:1.9.1'
 
-  testImplementation "org.json:json:20230227"
+    testImplementation "org.json:json:20230227"
 }
 
