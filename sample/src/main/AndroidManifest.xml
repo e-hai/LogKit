@@ -3,7 +3,7 @@
 
   <application
     android:icon="@mipmap/ic_launcher"
-    android:label="Sample">
+    android:label="LogKit">
     <activity android:name=".MainActivity"
         android:exported="true">
       <intent-filter>
