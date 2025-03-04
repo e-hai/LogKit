@@ -4,11 +4,10 @@ import android.app.Activity
 import android.content.Context
 import com.kit.log.ui.LogActivity.Companion.startActivity
 import com.orhanobut.logger.AndroidLogAdapter
-import com.orhanobut.logger.CsvFormatStrategy
 import com.orhanobut.logger.DiskLogAdapter
 import com.orhanobut.logger.DiskLogWriteReadStrategy
+import com.orhanobut.logger.CsvFormatStrategy
 import com.orhanobut.logger.Logger
-import com.orhanobut.logger.Printer
 
 object LogKit {
 
@@ -33,7 +32,11 @@ object LogKit {
         val csvFormatStrategy = CsvFormatStrategy.newBuilder()
             .logStrategy(diskLogWriteReadStrategy)
             .build()
-        Logger.addLogAdapter(DiskLogAdapter(csvFormatStrategy))
+        Logger.addLogAdapter(
+            DiskLogAdapter(
+                csvFormatStrategy
+            )
+        )
     }
 
     fun showLogUi(activity: Activity) {

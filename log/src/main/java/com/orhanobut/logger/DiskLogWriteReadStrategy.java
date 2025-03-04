@@ -1,5 +1,6 @@
 package com.orhanobut.logger;
 
+
 import static com.orhanobut.logger.Utils.checkNotNull;
 
 import android.content.Context;
@@ -13,15 +14,12 @@ import androidx.annotation.Nullable;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.function.Consumer;
 
 public class DiskLogWriteReadStrategy implements LogStrategy {
 

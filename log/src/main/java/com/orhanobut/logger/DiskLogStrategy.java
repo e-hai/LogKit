@@ -1,5 +1,7 @@
 package com.orhanobut.logger;
 
+import static com.orhanobut.logger.Utils.checkNotNull;
+
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -10,7 +12,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import static com.orhanobut.logger.Utils.checkNotNull;
 
 /**
  * 负责在 Android 中处理文件日志操作的后台线程。

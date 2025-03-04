@@ -1,5 +1,7 @@
 package com.orhanobut.logger;
 
+import static com.orhanobut.logger.Utils.checkNotNull;
+
 import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -12,7 +14,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import static com.orhanobut.logger.Utils.checkNotNull;
 
 /**
  * 用于 Android 的 CSV 格式日志记录。

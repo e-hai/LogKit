@@ -1,10 +1,11 @@
 package com.orhanobut.logger;
 
+import static com.orhanobut.logger.Utils.checkNotNull;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.util.Log;
 
-import static com.orhanobut.logger.Utils.checkNotNull;
 
 /**
  * LogCat 实现类，符合 {@link LogStrategy} 接口。

@@ -1,9 +1,10 @@
 package com.orhanobut.logger;
 
+import static com.orhanobut.logger.Utils.checkNotNull;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import static com.orhanobut.logger.Utils.checkNotNull;
 
 /**
  * 用于将日志消息保存到磁盘。

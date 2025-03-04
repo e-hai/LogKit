@@ -15,5 +15,5 @@ dependencyResolutionManagement {
   }
 }
 rootProject.name = "LogKit"
-include ':logger', ':sample'
+include ':sample'
 include ':log'

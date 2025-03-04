@@ -1,9 +1,10 @@
 package com.orhanobut.logger;
 
+import static com.orhanobut.logger.Utils.checkNotNull;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import static com.orhanobut.logger.Utils.checkNotNull;
 
 /**
  * Draws borders around the given log message along with additional information such as :

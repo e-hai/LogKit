@@ -1,9 +1,10 @@
 package com.orhanobut.logger;
 
+import static com.orhanobut.logger.Utils.checkNotNull;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import static com.orhanobut.logger.Utils.checkNotNull;
 
 /**
  * 针对 {@link LogAdapter} 的 Android 终端日志输出实现。
