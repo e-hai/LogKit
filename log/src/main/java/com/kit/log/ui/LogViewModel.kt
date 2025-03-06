@@ -2,7 +2,7 @@ package com.kit.log.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kit.log.LogKit
+import com.orhanobut.logger.LogKit
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

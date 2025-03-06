@@ -19,7 +19,7 @@ import java.io.IOException;
  *
  * 将所有日志以 CSV 格式写入磁盘。
  */
-public class DiskLogStrategy implements LogStrategy {
+ class DiskLogStrategy implements LogStrategy {
 
   @NonNull private final Handler handler;
 

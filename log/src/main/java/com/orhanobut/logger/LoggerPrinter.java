@@ -1,11 +1,11 @@
 package com.orhanobut.logger;
 
-import static com.orhanobut.logger.Logger.ASSERT;
-import static com.orhanobut.logger.Logger.DEBUG;
-import static com.orhanobut.logger.Logger.ERROR;
-import static com.orhanobut.logger.Logger.INFO;
-import static com.orhanobut.logger.Logger.VERBOSE;
-import static com.orhanobut.logger.Logger.WARN;
+import static com.orhanobut.logger.Utils.ASSERT;
+import static com.orhanobut.logger.Utils.DEBUG;
+import static com.orhanobut.logger.Utils.ERROR;
+import static com.orhanobut.logger.Utils.INFO;
+import static com.orhanobut.logger.Utils.VERBOSE;
+import static com.orhanobut.logger.Utils.WARN;
 import static com.orhanobut.logger.Utils.checkNotNull;
 
 import androidx.annotation.NonNull;

@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
  * 用于将日志消息保存到磁盘。
  * 默认情况下，它使用 {@link CsvFormatStrategy} 将文本消息转换为 CSV 格式。
  */
-public class DiskLogAdapter implements LogAdapter {
+ class DiskLogAdapter implements LogAdapter {
 
   @NonNull private final FormatStrategy formatStrategy;
 

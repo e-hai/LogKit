@@ -7,7 +7,7 @@ import androidx.annotation.Nullable;
  * 一个代理接口，用于启用额外的操作。
  * 包含所有可能的日志消息使用方式。
  */
-public interface Printer {
+ interface Printer {
 
   /**
    * 添加日志适配器

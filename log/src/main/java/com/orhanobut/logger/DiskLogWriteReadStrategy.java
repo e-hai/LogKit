@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public class DiskLogWriteReadStrategy implements LogStrategy {
+ class DiskLogWriteReadStrategy implements LogStrategy {
 
   private static final int MAX_READ_LINES = 3000; // 最大可读3000 行
   private static final int MAX_BYTES = 500 * 1024; // 每个文件最大 500KB，约 4000 行

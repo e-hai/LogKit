@@ -9,18 +9,22 @@ import java.io.StringWriter;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 
-import static com.orhanobut.logger.Logger.ASSERT;
-import static com.orhanobut.logger.Logger.DEBUG;
-import static com.orhanobut.logger.Logger.ERROR;
-import static com.orhanobut.logger.Logger.INFO;
-import static com.orhanobut.logger.Logger.UNKNOWN;
-import static com.orhanobut.logger.Logger.VERBOSE;
-import static com.orhanobut.logger.Logger.WARN;
 
 /**
  * 提供一些常见操作的便利方法
  */
 public class Utils {
+
+    // 定义日志的优先级常量
+    public static final int UNKNOWN = -1;
+
+    public static final int VERBOSE = 2;
+
+    public static final int DEBUG = 3;
+    public static final int INFO = 4;
+    public static final int WARN = 5;
+    public static final int ERROR = 6;
+    public static final int ASSERT = 7;
 
   // 私有构造函数，隐藏工具类的实例化
   private Utils() {

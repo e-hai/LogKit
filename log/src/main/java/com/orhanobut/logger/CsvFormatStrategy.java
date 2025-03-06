@@ -24,7 +24,7 @@ import java.util.Locale;
  * 4. 标签
  * 5. 日志消息
  */
-public class CsvFormatStrategy implements FormatStrategy {
+ class CsvFormatStrategy implements FormatStrategy {
 
   private static final String NEW_LINE = System.getProperty("line.separator");
   private static final String NEW_LINE_REPLACEMENT = " <br> ";

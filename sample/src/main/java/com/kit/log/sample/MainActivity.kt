@@ -3,7 +3,7 @@ package com.kit.log.sample
 import android.app.Activity
 import android.os.Bundle
 import android.view.View
-import com.kit.log.LogKit
+import com.orhanobut.logger.LogKit
 
 class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,5 +31,4 @@ class MainActivity : Activity() {
         })
 
     }
-
 }

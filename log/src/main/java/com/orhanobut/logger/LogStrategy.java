@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
  * @see LogcatLogStrategy 用于将日志输出到 Logcat
  * @see DiskLogStrategy 用于将日志输出到磁盘
  */
-public interface LogStrategy {
+ interface LogStrategy {
 
   /**
    * 该方法由 Logger 在每次处理日志消息时调用。

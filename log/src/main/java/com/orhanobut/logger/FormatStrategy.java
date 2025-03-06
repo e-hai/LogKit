@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
  * @see PrettyFormatStrategy
  * @see CsvFormatStrategy
  */
-public interface FormatStrategy {
+ interface FormatStrategy {
 
   /**
    * 记录日志信息。

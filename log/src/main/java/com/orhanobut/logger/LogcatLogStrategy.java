@@ -12,7 +12,7 @@ import android.util.Log;
  *
  * 该类通过标准的 {@link Log} 类将所有日志打印到 Logcat。
  */
-public class LogcatLogStrategy implements LogStrategy {
+ class LogcatLogStrategy implements LogStrategy {
 
   static final String DEFAULT_TAG = "NO_TAG"; // 默认的日志标签
 

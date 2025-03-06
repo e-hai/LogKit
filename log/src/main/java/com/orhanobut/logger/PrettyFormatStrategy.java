@@ -39,7 +39,7 @@ import androidx.annotation.Nullable;
 /**
  * 一个实现了 FormatStrategy 接口的格式化日志输出策略，提供友好的日志输出格式。
  */
-public class PrettyFormatStrategy implements FormatStrategy {
+ class PrettyFormatStrategy implements FormatStrategy {
 
   /**
    * Android 日志单条记录的最大字节数限制约为 4076 字节，

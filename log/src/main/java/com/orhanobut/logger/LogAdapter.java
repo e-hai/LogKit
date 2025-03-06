@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
  * @see AndroidLogAdapter
  * @see DiskLogAdapter
  */
-public interface LogAdapter {
+ interface LogAdapter {
 
   /**
    * 用于判断日志是否需要输出。

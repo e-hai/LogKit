@@ -14,7 +14,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.kit.log.R
-import com.orhanobut.logger.Logger
 import com.orhanobut.logger.Utils
 
 class LogAdapter : RecyclerView.Adapter<LogAdapter.VH>() {
@@ -83,23 +82,23 @@ class LogAdapter : RecyclerView.Adapter<LogAdapter.VH>() {
             itemView.findViewById<TextView>(R.id.tv_date).text = data.dateString
             itemView.findViewById<TextView>(R.id.tv_msg).text = data.message
             val color = when (Utils.logLevel(data.priority)) {
-                Logger.VERBOSE -> {
+                Utils.VERBOSE -> {
                     itemView.resources.getColor(R.color.verbose)
                 }
 
-                Logger.DEBUG -> {
+                Utils.DEBUG -> {
                     itemView.resources.getColor(R.color.debug)
                 }
 
-                Logger.INFO -> {
+                Utils.INFO -> {
                     itemView.resources.getColor(R.color.info)
                 }
 
-                Logger.WARN -> {
+                Utils.WARN -> {
                     itemView.resources.getColor(R.color.warning)
                 }
 
-                Logger.ERROR -> {
+                Utils.ERROR -> {
                     itemView.resources.getColor(R.color.error)
                 }
 

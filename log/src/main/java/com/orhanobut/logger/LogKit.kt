@@ -1,13 +1,8 @@
-package com.kit.log
+package com.orhanobut.logger
 
 import android.app.Activity
 import android.content.Context
 import com.kit.log.ui.LogActivity.Companion.startActivity
-import com.orhanobut.logger.AndroidLogAdapter
-import com.orhanobut.logger.DiskLogAdapter
-import com.orhanobut.logger.DiskLogWriteReadStrategy
-import com.orhanobut.logger.CsvFormatStrategy
-import com.orhanobut.logger.Logger
 
 object LogKit {
 

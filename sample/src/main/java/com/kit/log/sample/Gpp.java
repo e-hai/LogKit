@@ -1,6 +1,6 @@
 package com.kit.log.sample;
 
-import com.kit.log.LogKit;
+import com.orhanobut.logger.LogKit;
 
 public class Gpp {
 
