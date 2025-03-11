@@ -11,10 +11,10 @@ class MainActivity : Activity() {
         setContentView(R.layout.activity_main)
 
         LogKit.initAllLog(this)
-        for (i in 0..50) {
+        for (i in 0..1) {
             LogKit.v("A", "hello %s")
             LogKit.v("hello")
-            LogKit.d("b", "输出调试信息 debug my log message")
+            LogKit.d("b", "输出调试信息 debug my log message,mamamamamama,bbbababba,ospspsp")
             LogKit.d("输出调试信息 debug my log message")
             LogKit.i("C", "输出必要信息 info my log message")
             LogKit.i("输出必要信息 info my log message")

@@ -27,6 +27,7 @@ android {
 dependencies {
     implementation project(":log")
 
-//    implementation 'com.github.e-hai.LogKit:log:v1.0.0'
+//    implementation 'com.github.e-hai:LogKit:1.0.1'
+
 
 }
